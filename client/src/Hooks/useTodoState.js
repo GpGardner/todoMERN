@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default (initialTodos) => {
   const [todoList, setTodoList] = useState(initialTodos);
+  const URL = "https://todoreactmongo.herokuapp.com"
 
   return {
     todoList,
@@ -14,7 +15,7 @@ export default (initialTodos) => {
         complete: false,
       };
       axios
-        .post("http://todoreactmongo.herokuapp.com/todos/add", newTodoObject)
+        .post(`${URL}/todos/add`, newTodoObject)
         .then((res) => {
           newTodoObject._id = res.data._id;
           setTodoList([...todoList, newTodoObject]);
@@ -23,7 +24,7 @@ export default (initialTodos) => {
 
     removeTodo: (id) => {
       console.log(id);
-      axios.delete(`http://todoreactmongo.herokuapp.com/todos/delete/${id}`);
+      axios.delete(`${URL}/todos/delete/${id}`);
       const newList = todoList.filter((todo) => todo._id !== id);
       setTodoList(newList);
     },
@@ -38,7 +39,7 @@ export default (initialTodos) => {
         todoList.map((todo) => (todo._id === id ? editTodoObject : todo))
       );
       axios.post(
-        `http://todoreactmongo.herokuapp.com/todos/update/${id}?name=${name}&task=${task}`
+        `${URL}/todos/update/${id}?name=${name}&task=${task}`
       );
     },
 
@@ -48,45 +49,8 @@ export default (initialTodos) => {
       );
       setTodoList(newList);
       axios.post(
-        `http://todoreactmongo.herokuapp.com/todos/update/${id}?name=${name}&task=${task}&complete=${!complete}`
+        `${URL}/todos/update/${id}?name=${name}&task=${task}&complete=${!complete}`
       );
     },
   };
 };
-
-//   const [todoList, setTodoList] = useState(initialValues);
-
-//   const createNewTodo = (newName, newTodo) => {
-//     const newTodoObject = {
-//       id: uuidv4(),
-//       name: newName,
-//       task: newTodo,
-//       completed: false,
-//     };
-//     setTodoList([...todoList, newTodoObject]);
-//   };
-
-//   const toggleComplete = (id) => {
-//     const newList = todoList.map((todo) =>
-//       todo.id === id ? { ...todo, completed: !todo.completed } : todo
-//     );
-//     setTodoList(newList);
-//   };
-
-//   const removeTodo = (id) => {
-//     const newList = todoList.filter((todo) => todo.id !== id);
-//     setTodoList(newList);
-//   };
-
-//   const editTodo = (id, name, task) => {
-//     const newList = todoList.map((todo) =>
-//       todo.id === id
-//         ? {
-//             ...todo,
-//             name: name,
-//             task: task,
-//           }
-//         : todo
-//     );
-//     setTodoList(newList);
-//   };
