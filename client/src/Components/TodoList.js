@@ -31,7 +31,7 @@ function TodoList() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/todos/`)
+      .get(`http://todoreactmongo.herokuapp.com/todos/`)
       .then((res) => {
         res.data.map(() => {
           setTodoList(res.data);

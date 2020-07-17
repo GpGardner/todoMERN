@@ -14,7 +14,7 @@ export default (initialTodos) => {
         complete: false,
       };
       axios
-        .post("http://localhost:5000/todos/add", newTodoObject)
+        .post("http://todoreactmongo.herokuapp.com/todos/add", newTodoObject)
         .then((res) => {
           newTodoObject._id = res.data._id;
           setTodoList([...todoList, newTodoObject]);
@@ -23,7 +23,7 @@ export default (initialTodos) => {
 
     removeTodo: (id) => {
       console.log(id);
-      axios.delete(`http://localhost:5000/todos/delete/${id}`);
+      axios.delete(`http://todoreactmongo.herokuapp.com/todos/delete/${id}`);
       const newList = todoList.filter((todo) => todo._id !== id);
       setTodoList(newList);
     },
@@ -38,7 +38,7 @@ export default (initialTodos) => {
         todoList.map((todo) => (todo._id === id ? editTodoObject : todo))
       );
       axios.post(
-        `http://localhost:5000/todos/update/${id}?name=${name}&task=${task}`
+        `http://todoreactmongo.herokuapp.com/todos/update/${id}?name=${name}&task=${task}`
       );
     },
 
@@ -48,7 +48,7 @@ export default (initialTodos) => {
       );
       setTodoList(newList);
       axios.post(
-        `http://localhost:5000/todos/update/${id}?name=${name}&task=${task}&complete=${!complete}`
+        `http://todoreactmongo.herokuapp.com/todos/update/${id}?name=${name}&task=${task}&complete=${!complete}`
       );
     },
   };
